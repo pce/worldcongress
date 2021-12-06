@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@300&display=swap');
+
+
 html,
 body,
 #root {
@@ -56,7 +60,11 @@ code {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
 
+.app-header h1 {
+  font-family: 'Exo', sans-serif;
+  font-size: 1.4rem;
 }
 
 .app-intro--card {

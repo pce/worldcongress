@@ -1,8 +1,11 @@
 import * as THREE from "three"
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Suspense, useRef } from 'react'
-import { Html, useProgress, useTexture } from "@react-three/drei"
+import { Stars, useTexture } from "@react-three/drei"
 import { Mesh } from "three";
+import { Link } from "react-location";
+import Loader from "../components/Loader";
+
 
 function Planet() {
   
@@ -39,27 +42,20 @@ function ZoomIn() {
 }
 
 
-function Loader() {
-  const { active, progress, errors, item, loaded, total } = useProgress()
-  return <Html center>{progress} % loaded</Html>
-}
-
 export default function IntroScreen() {
    return <>
         <header className="app-header">
-        <p>
+        <h1>
           XERUS
-        </p>
+        </h1>
       </header> 
       <p className="app-intro--card">
-        <a
+        <Link 
           className="app-link"
-          href="/room/123"
-          target="_blank"
-          rel="noopener noreferrer"
+          to="/room/123"
         >
           Join
-        </a>
+        </Link>
         </p>
     <Canvas>
       <color attach="background" args={["#171720"]} />
@@ -78,6 +74,7 @@ export default function IntroScreen() {
       <ambientLight intensity={0.2} />
       <Suspense fallback={<Loader />}>
         <ZoomIn />  
+        <Stars />
         <directionalLight />
         <Planet />
         {/* <OrbitControls autoRotate /> */}
