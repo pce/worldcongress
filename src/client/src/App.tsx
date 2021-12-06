@@ -1,22 +1,12 @@
 import React from 'react';
+import IntroScreen from './screens/IntroScreen';
 
 
 function App() {
   return (
     <div className="app">
-      <header className="app-header">
-        <p>
-          XERUS
-        </p>
-        <a
-          className="app-link"
-          href="/room/123"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Join
-        </a>
-      </header>
+      <IntroScreen />
+
     </div>
   );
 }
