@@ -1,43 +1,21 @@
 import { Html, Sphere, Stage } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Loader from "../components/Loader";
+import { io, Socket } from "socket.io-client";
+import TextArea from "../components/TextArea";
 
 
-const socket = new WebSocket('ws://localhost:8080')
 
 export default function LevelScreen() {
 
-  const [text, setText] = useState("");
+  const socket = useRef<Socket>();
 
   useEffect(() => {
-
-    socket.onopen = function () {
-      console.log('#open: send something');
-      // socket.send(
-      //   JSON.stringify({
-      //     event: 'text',
-      //     data: "text",
-      //   })
-      // );
-    };
-
-    socket.onmessage = (evt: MessageEvent) => {
-      const data = JSON.parse(evt.data);
-      console.log('received: %s', data);
-      setText(data);
-    };
+    socket.current = io(`http://${window.location.hostname}:3003`);
+    return () => { socket.current?.disconnect(); }
   }, []);
 
-  const onChangeText = (evt: any) => {
-    console.log("val:", evt.target.value)
-    socket.send(
-      JSON.stringify({
-        event: 'text',
-        data: evt.target.value,
-      })
-    );
-  };
 
   console.log("Welcome to the Level")
   // question in header
@@ -56,8 +34,13 @@ export default function LevelScreen() {
           preset="rembrandt" // Optional: rembrandt (default) | portrait | upfront | soft
         // controls={controlsRef} // Optional: recalculates control target for correctness
         >
+
           <Html>
-            <textarea rows={12} value={text} onChange={onChangeText} />
+            {socket ? (
+                <TextArea socket={socket} />
+              ) : (
+                <div>Not Connected</div>
+              )}
           </Html>
           <Sphere args={[1, 24, 24]}>
             <meshPhongMaterial color="royalblue" attach="material" />

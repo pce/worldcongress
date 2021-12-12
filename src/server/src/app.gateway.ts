@@ -1,12 +1,13 @@
 import { Logger } from '@nestjs/common';
 import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 
-import { Server, Socket } from 'ws';
+import { Server, Socket } from 'socket.io';
 
-/**
- * example: https://github.com/nestjs/nest/blob/master/sample/16-gateways-ws/src/events/events.gateway.ts
- */
-@WebSocketGateway(8080)
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  }
+})
 export class AppGateway {
 
   @WebSocketServer()
@@ -20,8 +21,10 @@ export class AppGateway {
   }
 
   @SubscribeMessage('text')
-  onText(client: any, payload: any): string {
-    // Merge 
+  onText(client: any, payload: any) {
+    console.log("client: text");
+    // Merge
+    this.server.emit('text', payload);
     return payload;
   }
 
@@ -35,6 +38,7 @@ export class AppGateway {
 
   handleConnection(client: Socket, ...args: any[]) {
     this.logger.log(`Client connected: ${client.id}`);
+    // console.log(client);
   }
 
 }

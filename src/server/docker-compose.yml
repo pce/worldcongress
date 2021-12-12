@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  mongodb:
+    image : mongo
+    container_name: mongodb
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./volumes/mongodb:/data/db
+    ports:
+      - '27020-27021:27020-27021'
+    restart: unless-stopped
