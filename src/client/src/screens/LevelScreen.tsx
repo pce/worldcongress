@@ -9,11 +9,11 @@ import TextArea from "../components/TextArea";
 
 export default function LevelScreen() {
 
-  const socket = useRef<Socket>();
+  const socketRef = useRef<Socket>();
 
   useEffect(() => {
-    socket.current = io(`http://${window.location.hostname}:3003`);
-    return () => { socket.current?.disconnect(); }
+    socketRef.current = io(`http://${window.location.hostname}:3003`);
+    return () => { socketRef.current?.disconnect(); }
   }, []);
 
 
@@ -36,8 +36,8 @@ export default function LevelScreen() {
         >
 
           <Html>
-            {socket ? (
-                <TextArea socket={socket} />
+            {socketRef ? (
+                <TextArea socketRef={socketRef} />
               ) : (
                 <div>Not Connected</div>
               )}

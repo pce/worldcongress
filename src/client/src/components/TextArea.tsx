@@ -1,29 +1,27 @@
-import { useEffect, useState } from "react";
+import { Ref, useEffect, useState } from "react";
 // import { Socket } from "socket.io-client";
 
 
 type TextAreaProps = {
-  // socket: Socket
-  socket: any;
+  // socketRef: Ref<Socket>
+  socketRef: any;
 }
 
-export default function TextArea({ socket }: TextAreaProps) {
+export default function TextArea({ socketRef }: TextAreaProps) {
   const [text, setText] = useState("");
-
-
 
   const onChangeText = (evt: any) => {
     console.log("val:", evt.target.value)
-    socket.current.emit('text',  evt.target.value);
+    socketRef.current.emit('text:update',  evt.target.value);
   };
 
   useEffect(() => {
-    socket.current.on('text', (text:any) => {
+    socketRef.current.on('text:update', (text:any) => {
       // const data = JSON.parse(evt.data);
       console.log('received: %s', text);
       setText(text);
     });
-  }, [socket]);
+  }, [socketRef]);
 
 
   return <>

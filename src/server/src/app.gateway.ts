@@ -20,12 +20,11 @@ export class AppGateway {
     return 'Hello world!';
   }
 
-  @SubscribeMessage('text')
-  onText(client: any, payload: any) {
+  @SubscribeMessage('text:update')
+  onTextUpdate(client: any, payload: any) : void {
     console.log("client: text");
-    // Merge
-    this.server.emit('text', payload);
-    return payload;
+    // Merge? Meta Cursor?
+    this.server.emit('text:update', payload);
   }
 
   afterInit(server: Server) {
