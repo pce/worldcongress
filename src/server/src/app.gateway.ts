@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 
 import { Server, Socket } from 'socket.io';
 
@@ -21,10 +21,17 @@ export class AppGateway {
   }
 
   @SubscribeMessage('text:update')
-  onTextUpdate(client: any, payload: any) : void {
+  onTextUpdate(@MessageBody() text: string) : void {
     console.log("client: text");
-    // Merge? Meta Cursor?
-    this.server.emit('text:update', payload);
+
+    this.server.emit('text:update', text);
+  }
+
+  @SubscribeMessage('reactions:react')
+  onReaction(@MessageBody() text: string) : void {
+    console.log("client: reaction");
+
+    this.server.emit('reactions:react', text);
   }
 
   afterInit(server: Server) {

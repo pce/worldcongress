@@ -94,3 +94,23 @@ code {
   }
 }
 
+/* reactions */
+
+.reactions-list {
+  padding-top: 3px;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  display: inline-block;
+}
+
+.reactions-list--emojis {
+  display: flex;
+  margin: 0 6px;
+}
+
+.reactions-list--emojis div {
+  cursor: pointer;
+  user-select: none;
+}

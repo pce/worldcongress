@@ -4,6 +4,7 @@ import { Suspense, useEffect, useRef } from "react";
 import Loader from "../components/Loader";
 import { io, Socket } from "socket.io-client";
 import TextArea from "../components/TextArea";
+import Reactions from "../components/Reactions";
 
 
 
@@ -37,7 +38,10 @@ export default function LevelScreen() {
 
           <Html>
             {socketRef ? (
+                <>
                 <TextArea socketRef={socketRef} />
+                <Reactions socketRef={socketRef}  />
+                </>
               ) : (
                 <div>Not Connected</div>
               )}
