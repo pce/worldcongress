@@ -1,32 +1,19 @@
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
 name: worldcongress
-
-
-static_sites:
-  - name: client
-    environment_slug: html
-    github:
-      repo: pce/worldcongress
-      branch: main
-      deploy_on_push: true
-    build_command: yarn workspace client build 
-    output_dir: /dist/apps/webapp
-    routes:
-      - path: /
-
-
+region: fra
 services:
-  - name: server
-    environment_slug: node-js
-    github:
-      branch: main
-      deploy_on_push: true
-      repo: pce/worldcongress
-    build_command: yarn workspace server build
-    run_command: yarn workspace server start:prod
-    envs:
-      - key: API_URL
-        value: ${_self.PUBLIC_URL}
-    cors:
-      allow_origins:
-        - regex: .*
-
+- build_command: yarn workspace client build  && yarn workspace server build
+  environment_slug: node-js
+  github:
+    branch: main
+    repo: pce/worldcongress
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: worldcongress
+  routes:
+  - path: /
+  run_command: yarn workspace server start:prod
+  source_dir: /
