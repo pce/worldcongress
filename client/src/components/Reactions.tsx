@@ -10,24 +10,42 @@ type Reactions = {
   [key: string]: number;
 }
 
-const defaultReactions: Reactions  = {'👍':0, '👎':0, '😄':0, '🎉':0, '😕':0, '❤️':0}; 
+type Reaction = {
+  count: number;
+  icon: string;
+  name?: string;
+}
+
+const defaultReactions: Reaction[] = [
+  {icon:'👍', count:0}, 
+  {icon:'👎', count:0}, 
+  {icon:'😄', count:0}, 
+  {icon:'🎉', count:0}, 
+  {icon:'😕', count:0}, 
+  {icon:'❤️', count:0}, 
+];
 
 export default function Reactions({ socketRef  }: ReactionsProps) {
 
-  const [reactions, setReactions] = useState<Reactions>(defaultReactions);
+  const [reactions, setReactions] = useState<Reaction[]>(defaultReactions);
 
   useEffect(() => {
     socketRef.current.on('reactions:react', (text:any) => {
       // const data = JSON.parse(evt.data);
       console.log('received: %s', text);
-      setReactions((prevState:Reactions) => { 
-        prevState[text]++;
+      setReactions((prevState:Reaction[]) => {
+        
+        prevState.map(e => {
+          if(e.icon === text) {
+            e.count = e.count + 1;
+          }
+        })
         return prevState;
       });
       console.log(reactions);
     });
-  }, [socketRef, reactions]);
-
+  }, [socketRef]);
+  
   const onReaction = (i:string) => {
     socketRef.current.emit('reactions:react', i);
   }
@@ -36,8 +54,8 @@ export default function Reactions({ socketRef  }: ReactionsProps) {
     {console.log(reactions)}
     <div className="reactions-list">
       <div className="reactions-list--emojis">
-        {Object.keys(reactions).map((reaction, i) => {
-          return <div key={i} onClick={()=>onReaction(reaction)}>{reaction} ({reactions[reaction]})</div>
+        {reactions.map((reaction, i) => {
+          return <div key={i} onClick={()=>onReaction(reaction.icon)}>{reaction.icon} ({reaction.count})</div>
         })}
       </div>
     </div>

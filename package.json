@@ -1,4 +1,4 @@
 {
     "private": true,
-    "workspaces": ["src/server", "src/client"]
+    "workspaces": ["server", "client"]
   }

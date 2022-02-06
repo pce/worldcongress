@@ -1,0 +1,32 @@
+name: worldcongress
+
+
+static_sites:
+  - name: client
+    environment_slug: html
+    github:
+      repo: pce/worldcongress
+      branch: main
+      deploy_on_push: true
+    build_command: yarn workspace client build 
+    output_dir: /dist/apps/webapp
+    routes:
+      - path: /
+
+
+services:
+  - name: server
+    environment_slug: node-js
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: pce/worldcongress
+    build_command: yarn workspace server build
+    run_command: yarn workspace server start:prod
+    envs:
+      - key: API_URL
+        value: ${_self.PUBLIC_URL}
+    cors:
+      allow_origins:
+        - regex: .*
+
