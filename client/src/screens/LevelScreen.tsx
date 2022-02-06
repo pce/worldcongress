@@ -13,7 +13,8 @@ export default function LevelScreen() {
   const socketRef = useRef<Socket>();
 
   useEffect(() => {
-    socketRef.current = io(`http://${window.location.hostname}:3003`);
+    // socketRef.current = io(`http://${window.location.hostname}:3003`);
+    socketRef.current = io(`http://${window.location.hostname}`);
     return () => { socketRef.current?.disconnect(); }
   }, []);
 
