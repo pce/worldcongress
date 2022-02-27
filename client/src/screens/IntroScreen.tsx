@@ -1,6 +1,6 @@
 import * as THREE from "three"
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Suspense, useRef } from 'react'
+import { Suspense, useRef, useState } from 'react'
 import { Stars, useTexture } from "@react-three/drei"
 import { Mesh } from "three";
 import { Link } from "react-location";
@@ -43,16 +43,21 @@ function ZoomIn() {
 
 
 export default function IntroScreen() {
+
+  const [roomId, setRoomId] = useState('123');
+
    return <>
         <header className="app-header">
         <h1>
-          XERUS
+          Weltkongress
         </h1>
       </header> 
       <p className="app-intro--card">
+        <input name="roomId" 
+         onChange={e => setRoomId(e.target.value)} />
         <Link 
           className="app-link"
-          to="/room/123"
+          to={`/room/${roomId}`}
         >
           Join
         </Link>

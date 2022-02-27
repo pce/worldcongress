@@ -1,4 +1,5 @@
 import { Ref, useEffect, useState } from "react";
+import Buttons from "./Buttons";
 // import { Socket } from "socket.io-client";
 
 
@@ -15,6 +16,11 @@ export default function TextArea({ socketRef }: TextAreaProps) {
     socketRef.current.emit('text:update',  evt.target.value);
   };
 
+  const onSave = (evt: any) => {
+    console.log("save:", evt.target.value)
+  };
+
+
   useEffect(() => {
     socketRef.current.on('text:update', (text:any) => {
       // const data = JSON.parse(evt.data);
@@ -25,7 +31,9 @@ export default function TextArea({ socketRef }: TextAreaProps) {
 
 
   return <>
-    <textarea rows={12} value={text} onChange={onChangeText} />
+    <h1 className="content-headline">Lernen</h1>
+    <Buttons onSave={onSave} />
+    <textarea rows={12} value={text} onChange={onChangeText} className="content-textarea" />
   </>
 }
 

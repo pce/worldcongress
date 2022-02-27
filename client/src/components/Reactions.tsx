@@ -44,7 +44,7 @@ export default function Reactions({ socketRef  }: ReactionsProps) {
       });
       console.log(reactions);
     });
-  }, [socketRef]);
+  }, [socketRef, reactions]);
   
   const onReaction = (i:string) => {
     socketRef.current.emit('reactions:react', i);

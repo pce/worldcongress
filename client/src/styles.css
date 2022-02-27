@@ -94,6 +94,27 @@ code {
   }
 }
 
+
+/* content: textarea */
+
+.content {
+  width: 75vw;
+  height: 85vh;
+}
+
+.content-textarea {
+  width: 42rem;
+  height: 100%;
+}
+
+.content-button {
+  border: none
+}
+
+.content-headline {
+  color: #fff;
+}
+
 /* reactions */
 
 .reactions-list {
@@ -102,7 +123,8 @@ code {
   border: 1px solid rgba(0,0,0,0.15);
   border-radius: 4px;
   box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-  display: inline-block;
+  /* display: inline-block; */
+  display: none;
 }
 
 .reactions-list--emojis {

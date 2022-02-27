@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import { io, Socket } from "socket.io-client";
 import TextArea from "../components/TextArea";
 import Reactions from "../components/Reactions";
+import Buttons from "../components/Buttons";
 
 
 
@@ -13,8 +14,10 @@ export default function LevelScreen() {
   const socketRef = useRef<Socket>();
 
   useEffect(() => {
-    // socketRef.current = io(`http://${window.location.hostname}:3003`);
     socketRef.current = io(`https://${window.location.hostname}`);
+    if (window.location.hostname === 'localhost') {
+      socketRef.current = io(`http://${window.location.hostname}:8080`);
+    }
     return () => { socketRef.current?.disconnect(); }
   }, []);
 
@@ -32,12 +35,12 @@ export default function LevelScreen() {
           shadows={true}  // Optional: lights cast shadow (default=true)
           adjustCamera={true}  // Optional: zooms the content in (default=true)
           intensity={1} // Optional: light intensity (default=1)
-          environment="city" // Optional: environment (default=city)
+          // environment="city" // Optional: environment (default=city)
           preset="rembrandt" // Optional: rembrandt (default) | portrait | upfront | soft
-        // controls={controlsRef} // Optional: recalculates control target for correctness
+          // controls={controlsRef} // Optional: recalculates control target for correctness
         >
 
-          <Html>
+          <Html className="content" transform={false} center={true}  >
             {socketRef ? (
                 <>
                 <TextArea socketRef={socketRef} />
@@ -50,7 +53,6 @@ export default function LevelScreen() {
           <Sphere args={[1, 24, 24]}>
             <meshPhongMaterial color="royalblue" attach="material" />
           </Sphere>
-          {/* <mesh /> */}
 
         </Stage>
       </Suspense>
