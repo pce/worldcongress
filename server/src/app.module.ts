@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { AppGateway } from './app.gateway';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { MongooseModule } from '@nestjs/mongoose';
+import { DocsModule } from './docs/docs.module';
 
 @Module({
   imports: [
@@ -11,6 +13,8 @@ import { join } from 'path';
       rootPath: join(__dirname, '../../', 'client/build'),
       // exclude: ['/api*'],
     }),
+    MongooseModule.forRoot(`${process.env.MDB_DSN}`),
+    DocsModule
   ],
   controllers: [AppController],
   providers: [AppService, AppGateway],
