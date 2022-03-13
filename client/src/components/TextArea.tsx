@@ -51,9 +51,11 @@ export default function TextArea({ socketRef }: TextAreaProps) {
     // get the saved document of room
     fetch(`${API_URL}/docs/${title}`).then((res) => res.json()).then((json) => {
       console.log(json)
-      let text = json[json.length-1].text;
-      console.log('received: %s', text);
-      setText(text);
+      if (json && json.length) {
+        let text = json[json.length-1].text;
+        console.log('received from db: %s', text);
+        setText(text);
+      }
     })
   }, []);
    
