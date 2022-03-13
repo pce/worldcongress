@@ -70,14 +70,23 @@ code {
 .app-intro--card {
 
   background-color: rgba(66, 50, 110, 0.5);
-  padding: 30px;
+  padding: 10px;
   border-radius: 50px;
   position: absolute;
   z-index: 2;
   margin-top: 20vh;
   margin-left: 10vw;
   width: 28vw;
+}
 
+.app-intro--card input {
+  background-color: rgba(66, 50, 110, 0.5);
+  color: #fff;
+  border:none;
+  border-bottom: 2px solid #fff;
+  padding: 4px;
+  margin: 4px;
+  user-select: none;
 }
 
 .app-link {
@@ -96,6 +105,9 @@ code {
 
 
 /* content: textarea */
+textarea:focus, input:focus{
+  outline: none;
+}
 
 .content {
   width: 75vw;

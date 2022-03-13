@@ -5,8 +5,6 @@ import Loader from "../components/Loader";
 import { io, Socket } from "socket.io-client";
 import TextArea from "../components/TextArea";
 import Reactions from "../components/Reactions";
-import Buttons from "../components/Buttons";
-
 
 
 export default function LevelScreen() {
@@ -15,14 +13,22 @@ export default function LevelScreen() {
 
   useEffect(() => {
     socketRef.current = io(`https://${window.location.hostname}`);
+    let API_URL = `https://${window.location.hostname}`;
     if (window.location.hostname === 'localhost') {
       socketRef.current = io(`http://${window.location.hostname}:8080`);
+      API_URL = `http://${window.location.hostname}:8080`;
     }
+    // get the saved document of room
+    let title = window.location.pathname.replace("/room/", "");
+    fetch(`${API_URL}/docs/${title}`).then((res) => res.json()).then((json) => {
+      console.log(json)
+    })
+
+    // cleanup
     return () => { socketRef.current?.disconnect(); }
   }, []);
 
-
-  console.log("Welcome to the Level")
+  console && console.log("Welcome to the Doc")
   // question in header
   // Wall/Canvas Scene for Socket Texts and Pen (Pixelarray or Vectors)
   return <>

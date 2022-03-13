@@ -44,7 +44,7 @@ function ZoomIn() {
 
 export default function IntroScreen() {
 
-  const [roomId, setRoomId] = useState('123');
+  const [roomId, setRoomId] = useState('');
 
    return <>
         <header className="app-header">
@@ -53,8 +53,16 @@ export default function IntroScreen() {
         </h1>
       </header> 
       <p className="app-intro--card">
-        <input name="roomId" 
-         onChange={e => setRoomId(e.target.value)} />
+        <input name="roomId"
+        value={roomId} 
+         onChange={e => {
+          let value = e.target.value
+          const not = value.match(/[^a-zA-Z0-9-]+/g);
+          if (not) {
+            not.forEach((text:string) => value = value.replace(text, ""));
+          }
+          setRoomId(value)
+         }} />
         <Link 
           className="app-link"
           to={`/room/${roomId}`}
