@@ -58,7 +58,7 @@ export default function TextArea({ socketRef }: TextAreaProps) {
   }, []);
    
   return <>
-    <h1 className="content-headline">Lernen  <Buttons onSave={onSave} /></h1>
+    <h1 className="content-headline">{title} <Buttons onSave={onSave} /></h1>
     <textarea rows={12} value={text} onChange={onChangeText} className="content-textarea" />
   </>
 }
